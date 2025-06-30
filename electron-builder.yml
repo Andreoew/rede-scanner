@@ -13,6 +13,9 @@ files:
 asarUnpack:
   - '**/*.{node,dll}'
 win:
+  target:
+    - nsis
+  icon: src/icons/icon.ico
   executableName: rede-scanner
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
@@ -20,6 +23,9 @@ nsis:
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
 mac:
+  target:
+    - dmg
+  icon: src/icons/icon.icns
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
     - NSCameraUsageDescription: Application requests access to the device's camera.
@@ -35,6 +41,7 @@ linux:
     - rpm
     - pacman
     - freebsd
+  icon: src/icons/icon.png
   maintainer: adss.com.br
   synopsis: ${description}
   category: Utility
