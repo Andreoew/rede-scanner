@@ -3,17 +3,17 @@ productName: Rede Scanner
 directories:
   buildResources: build
 files:
+  - src/**/*
+  - package.json
+  - node_modules/**/*
   - '!**/.vscode/*'
-  - '!src/*'
   - '!electron.vite.config.{js,ts,mjs,cjs}'
   - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
-  - '!package.json'
-  - '!node_modules/**/*'
 asarUnpack:
   - '**/*.{node,dll}'
 win:
-  executableName: rotion
+  executableName: rede-scanner
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
