@@ -203,9 +203,9 @@ Este projeto está sob a licença ISC. Veja o arquivo `LICENSE` para mais detalh
 
 ## 👨‍💻 Autor
 
-**André**
-- Email: andre@exemplo.com
-- GitHub: [@seu-usuario](https://github.com/seu-usuario)
+**André Silva**
+- Email: contato@adss.com.br
+- GitHub: [@Andreoew](https://github.com/Andreoew)
 
 ## 🙏 Agradecimentos
 
