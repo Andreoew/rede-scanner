@@ -1,0 +1,218 @@
+{
+  "deviceTypes": {
+    "APPLE": {
+      "type": "📱 iPhone/iPad",
+      "category": "Mobile"
+    },
+    "SAMSUNG": {
+      "type": "📱 Samsung Mobile",
+      "category": "Mobile"
+    },
+    "XIAOMI": {
+      "type": "📱 Xiaomi Mobile",
+      "category": "Mobile"
+    },
+    "HUAWEI": {
+      "type": "📱 Huawei Mobile",
+      "category": "Mobile"
+    },
+    "ONEPLUS": {
+      "type": "📱 OnePlus",
+      "category": "Mobile"
+    },
+    "GOOGLE": {
+      "type": "📱 Google Pixel",
+      "category": "Mobile"
+    },
+    "DELL": {
+      "type": "💻 Dell Computer",
+      "category": "Computer"
+    },
+    "HP": {
+      "type": "💻 HP Computer",
+      "category": "Computer"
+    },
+    "LENOVO": {
+      "type": "💻 Lenovo Computer",
+      "category": "Computer"
+    },
+    "ASUSTEK": {
+      "type": "💻 ASUS Computer",
+      "category": "Computer"
+    },
+    "ACER": {
+      "type": "💻 Acer Computer",
+      "category": "Computer"
+    },
+    "MSI": {
+      "type": "💻 MSI Computer",
+      "category": "Computer"
+    },
+    "APPLE INC": {
+      "type": "💻 MacBook/iMac",
+      "category": "Computer"
+    },
+    "TP-LINK": {
+      "type": "📡 Roteador TP-Link",
+      "category": "Network"
+    },
+    "ASUSTEK COMPUTER": {
+      "type": "📡 Roteador ASUS",
+      "category": "Network"
+    },
+    "NETGEAR": {
+      "type": "📡 Roteador Netgear",
+      "category": "Network"
+    },
+    "LINKSYS": {
+      "type": "📡 Roteador Linksys",
+      "category": "Network"
+    },
+    "D-LINK": {
+      "type": "📡 Roteador D-Link",
+      "category": "Network"
+    },
+    "MOTOROLA": {
+      "type": "📡 Modem Motorola",
+      "category": "Network"
+    },
+    "ARRIS": {
+      "type": "📡 Modem Arris",
+      "category": "Network"
+    },
+    "HIKVISION": {
+      "type": "📹 Câmera Hikvision",
+      "category": "Camera"
+    },
+    "DAHUA": {
+      "type": "📹 Câmera Dahua",
+      "category": "Camera"
+    },
+    "AXIS": {
+      "type": "📹 Câmera Axis",
+      "category": "Camera"
+    },
+    "BOSCH": {
+      "type": "📹 Câmera Bosch",
+      "category": "Camera"
+    },
+    "SONY": {
+      "type": "📹 Câmera Sony",
+      "category": "Camera"
+    },
+    "CANON": {
+      "type": "📹 Câmera Canon",
+      "category": "Camera"
+    },
+    "NEST": {
+      "type": "🏠 Nest IoT",
+      "category": "IoT"
+    },
+    "PHILIPS": {
+      "type": "💡 Philips IoT",
+      "category": "IoT"
+    },
+    "SAMSUNG ELECTRONICS": {
+      "type": "📺 Samsung TV",
+      "category": "TV"
+    },
+    "LG ELECTRONICS": {
+      "type": "📺 LG TV",
+      "category": "TV"
+    },
+    "VIZIO": {
+      "type": "📺 Vizio TV",
+      "category": "TV"
+    },
+    "CANON INC": {
+      "type": "🖨️ Impressora Canon",
+      "category": "Printer"
+    },
+    "HP INC": {
+      "type": "🖨️ Impressora HP",
+      "category": "Printer"
+    },
+    "EPSON": {
+      "type": "🖨️ Impressora Epson",
+      "category": "Printer"
+    },
+    "BROTHER": {
+      "type": "🖨️ Impressora Brother",
+      "category": "Printer"
+    },
+    "NINTENDO": {
+      "type": "🎮 Nintendo Switch",
+      "category": "Gaming"
+    },
+    "MICROSOFT": {
+      "type": "🎮 Xbox",
+      "category": "Gaming"
+    },
+    "SONY INTERACTIVE": {
+      "type": "🎮 PlayStation",
+      "category": "Gaming"
+    },
+    "AMAZON": {
+      "type": "🏠 Amazon Echo",
+      "category": "SmartHome"
+    },
+    "GOOGLE LLC": {
+      "type": "🏠 Google Home",
+      "category": "SmartHome"
+    },
+    "XIAOMI COMMUNICATIONS": {
+      "type": "🏠 Xiaomi IoT",
+      "category": "SmartHome"
+    }
+  },
+  "keywords": {
+    "CAMERA": {
+      "type": "📹 Câmera de Segurança",
+      "category": "Camera"
+    },
+    "CCTV": {
+      "type": "📹 Câmera de Segurança",
+      "category": "Camera"
+    },
+    "ROUTER": {
+      "type": "📡 Roteador/Modem",
+      "category": "Network"
+    },
+    "GATEWAY": {
+      "type": "📡 Roteador/Modem",
+      "category": "Network"
+    },
+    "PRINTER": {
+      "type": "🖨️ Impressora",
+      "category": "Printer"
+    },
+    "PRINT": {
+      "type": "🖨️ Impressora",
+      "category": "Printer"
+    },
+    "TV": {
+      "type": "📺 Smart TV",
+      "category": "TV"
+    },
+    "TELEVISION": {
+      "type": "📺 Smart TV",
+      "category": "TV"
+    },
+    "PHONE": {
+      "type": "📱 Dispositivo Mobile",
+      "category": "Mobile"
+    },
+    "MOBILE": {
+      "type": "📱 Dispositivo Mobile",
+      "category": "Mobile"
+    },
+    "COMPUTER": {
+      "type": "💻 Computador",
+      "category": "Computer"
+    },
+    "PC": {
+      "type": "💻 Computador",
+      "category": "Computer"
+    }
+  }
+} 

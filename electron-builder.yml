@@ -1,0 +1,50 @@
+appId: com.rede-scanner.app
+productName: Rede Scanner
+directories:
+  output: dist
+  buildResources: src
+files:
+  - src/**/*
+  - package.json
+  - node_modules/**/*
+extraResources:
+  - from: src/device-types.json
+    to: device-types.json
+  - from: .env
+    to: .env
+    filter: ["**/*"]
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: src/icons/icon.ico
+  requestedExecutionLevel: asInvoker
+mac:
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+  icon: src/icons/icon.icns
+  category: public.app-category.utilities
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+  icon: src/icons/icon.png
+  category: Utility
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Rede Scanner
+  uninstallDisplayName: Rede Scanner
+  artifactName: RedeScanner-Setup-${version}.${ext}
+publish:
+  provider: github
+  releaseType: release
+  private: false
+  publishAutoUpdate: true 

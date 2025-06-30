@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scanner de Rede</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    .header-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      object-fit: contain;
+      background: white;
+      padding: 5px;
+      transition: transform 0.3s ease;
+    }
+    
+    .header-logo:hover {
+      transform: scale(1.1);
+    }
+    
+    .header-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+    
+    .header p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+    }
+    
+    .content {
+      padding: 40px;
+    }
+    
+    .scan-button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+      margin-bottom: 30px;
+      width: 100%;
+    }
+    
+    .scan-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+    }
+    
+    .scan-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .progress-container {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 30px;
+      border: 2px solid #e9ecef;
+    }
+    
+    .progress-text {
+      font-size: 1.1rem;
+      color: #495057;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e9ecef;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 4px;
+    }
+    
+    .loading {
+      display: none;
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .results {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 20px;
+      max-height: 400px;
+      overflow-y: auto;
+      border: 2px solid #e9ecef;
+    }
+    
+    .results h3 {
+      color: #495057;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+    
+    .device-item {
+      background: white;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      border-left: 4px solid #667eea;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .device-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .device-type {
+      color: #007bff;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 3px;
+    }
+    
+    .device-ip {
+      font-weight: bold;
+      color: #667eea;
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 5px;
+      transition: background-color 0.2s ease;
+      user-select: none;
+    }
+    
+    .device-ip:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .device-ip:active {
+      background-color: #e9ecef;
+    }
+    
+    .device-mac {
+      color: #6c757d;
+      font-family: 'Courier New', monospace;
+      margin-bottom: 5px;
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 5px;
+      transition: background-color 0.2s ease;
+      user-select: none;
+    }
+    
+    .device-mac:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .device-mac:active {
+      background-color: #e9ecef;
+    }
+    
+    .device-vendor {
+      color: #28a745;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    
+    .device-vendor.loading {
+      color: #ffc107;
+      font-style: italic;
+    }
+    
+    .device-category {
+      color: #6c757d;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .copy-hint {
+      font-size: 0.7rem;
+      color: #adb5bd;
+      margin-top: 5px;
+      font-style: italic;
+    }
+    
+    .empty-state {
+      text-align: center;
+      color: #6c757d;
+      font-style: italic;
+      padding: 40px 20px;
+    }
+    
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #667eea;
+    }
+    
+    .stat-label {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    .export-button {
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+    }
+    
+    .export-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 15px rgba(40, 167, 69, 0.4);
+    }
+    
+    .export-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    /* Toast Container */
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    
+    .toast {
+      background: white;
+      color: #333;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      max-width: 300px;
+      word-wrap: break-word;
+      transform: translateX(100%);
+      opacity: 0;
+      transition: all 0.3s ease;
+      pointer-events: auto;
+      border-left: 4px solid #28a745;
+    }
+    
+    .toast.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    
+    .toast.error {
+      border-left-color: #dc3545;
+      background: #fff5f5;
+    }
+    
+    .toast.success {
+      border-left-color: #28a745;
+      background: #f0fff4;
+    }
+    
+    .toast-icon {
+      margin-right: 8px;
+      font-size: 16px;
+    }
+    
+    /* Footer */
+    .footer {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 12px 20px;
+      text-align: center;
+      margin-top: 20px;
+      border-radius: 0 0 20px 20px;
+    }
+    
+    .footer-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .footer-company {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    
+    .footer-contact {
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+    
+    .footer-website {
+      font-size: 0.8rem;
+      opacity: 0.9;
+      text-decoration: none;
+      color: white;
+      transition: opacity 0.3s ease;
+    }
+    
+    .footer-website:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+    
+    @media (max-width: 600px) {
+      .footer-content {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-content">
+        <img src="icon.png" alt="Logo" class="header-logo">
+        <div class="header-text">
+          <h1>🔍 Scanner de Rede</h1>
+          <p>Descubra dispositivos conectados na sua rede local</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="content">
+      <button id="scanButton" class="scan-button" onclick="scan()">
+        🚀 Iniciar Scan da Rede
+      </button>
+      
+      <div class="progress-container" id="progressContainer" style="display: none;">
+        <div class="progress-text" id="progressText">Preparando scan...</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          <div>Escaneando rede...</div>
+        </div>
+      </div>
+      
+      <div class="stats" id="stats" style="display: none;">
+        <div class="stat-item">
+          <div class="stat-number" id="devicesFound">0</div>
+          <div class="stat-label">Dispositivos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="progressPercent">0%</div>
+          <div class="stat-label">Progresso</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="timeElapsed">0s</div>
+          <div class="stat-label">Tempo</div>
+        </div>
+      </div>
+      
+      <div class="results" id="results">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <h3>📱 Dispositivos Encontrados (Tipo • IP • MAC • Fabricante • Categoria)</h3>
+          <button id="exportButton" class="export-button" onclick="exportResults()" style="display: none;">
+            📊 Exportar CSV
+          </button>
+        </div>
+        <div class="empty-state" id="emptyState">
+          Clique em "Iniciar Scan" para descobrir dispositivos na rede
+          <div class="copy-hint">💡 Dica: Duplo clique no IP ou MAC para copiar</div>
+        </div>
+        <div id="deviceList"></div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <div class="footer-content">
+        <div class="footer-company">Feito por ADSS</div>
+        <div class="footer-contact">📞 (65) 99252-2895</div>
+        <a href="https://www.adss.com.br" target="_blank" class="footer-website">🌐 www.adss.com.br</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    let scanInProgress = false;
+    let devices = [];
+    let startTime = 0;
+    let progressInterval;
+    
+    function scan() {
+      if (scanInProgress) return;
+      
+      scanInProgress = true;
+      devices = [];
+      startTime = Date.now();
+      
+      // Reset UI
+      document.getElementById('scanButton').textContent = '⏳ Escaneando...';
+      document.getElementById('scanButton').disabled = true;
+      document.getElementById('progressContainer').style.display = 'block';
+      document.getElementById('stats').style.display = 'flex';
+      document.getElementById('emptyState').style.display = 'none';
+      document.getElementById('deviceList').innerHTML = '';
+      document.getElementById('exportButton').style.display = 'none';
+      
+      // Iniciar progresso
+      let progress = 0;
+      progressInterval = setInterval(() => {
+        progress += Math.random() * 2;
+        if (progress > 90) progress = 90;
+        
+        document.getElementById('progressFill').style.width = progress + '%';
+        document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+        
+        const elapsed = Math.round((Date.now() - startTime) / 1000);
+        document.getElementById('timeElapsed').textContent = elapsed + 's';
+      }, 100);
+      
+      // Iniciar scan usando callbacks do preload.js
+      window.api.scanNetwork(
+        // Callback de progresso
+        (progressText) => {
+          document.getElementById('progressText').textContent = progressText;
+          
+          // Extrair número do progresso (ex: "Testando 192.168.15.45... (45/254)")
+          const match = progressText.match(/\((\d+)\/254\)/);
+          if (match) {
+            const current = parseInt(match[1]);
+            const percent = Math.round((current / 254) * 100);
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressPercent').textContent = percent + '%';
+          }
+        },
+        // Callback de resultado encontrado
+        (deviceInfo) => {
+          devices.push(deviceInfo);
+          document.getElementById('devicesFound').textContent = devices.length;
+          
+          // Mostrar botão de exportação quando encontrar o primeiro dispositivo
+          if (devices.length === 1) {
+            document.getElementById('exportButton').style.display = 'block';
+          }
+          
+          // Criar elemento do dispositivo
+          const deviceList = document.getElementById('deviceList');
+          const deviceItem = document.createElement('div');
+          deviceItem.className = 'device-item';
+          
+          const parts = deviceInfo.split(' - ');
+          const ip = parts[0];
+          const mac = parts[1];
+          const vendor = parts[2] || 'Consultando...';
+          const deviceType = parts[3] || '⏳ Identificando...';
+          const category = parts[4] || 'Loading';
+          
+          deviceItem.innerHTML = `
+            <div class="device-icon">${getDeviceIcon(deviceType)}</div>
+            <div class="device-info">
+              <div class="device-type">${deviceType}</div>
+              <div class="device-ip" ondblclick="copyToClipboard('${ip}')">${ip}</div>
+              <div class="device-mac" ondblclick="copyToClipboard('${mac}')">${mac}</div>
+              <div class="device-manufacturer ${vendor === 'Consultando...' ? 'loading' : ''}">${vendor}</div>
+              <div class="device-category">${category}</div>
+            </div>
+          `;
+          
+          deviceList.appendChild(deviceItem);
+          
+          // Se o fabricante ainda está sendo consultado, atualizar quando chegar
+          if (vendor === 'Consultando...') {
+            setTimeout(() => {
+              const vendorElement = deviceItem.querySelector('.device-manufacturer');
+              if (vendorElement && vendorElement.textContent.includes('Consultando')) {
+                vendorElement.textContent = 'Fabricante desconhecido';
+                vendorElement.classList.remove('loading');
+              }
+            }, 5000); // 5 segundos de timeout
+          }
+        }
+      ).then(() => {
+        clearInterval(progressInterval);
+        
+        document.getElementById('progressFill').style.width = '100%';
+        document.getElementById('progressPercent').textContent = '100%';
+        document.getElementById('progressText').textContent = '✅ Scan concluído!';
+        
+        showToast('✅ Scan concluído! ' + devices.length + ' dispositivos encontrados.', 'success');
+        
+        // Reset UI
+        document.getElementById('scanButton').textContent = '🚀 Iniciar Scan da Rede';
+        document.getElementById('scanButton').disabled = false;
+        document.getElementById('progressContainer').style.display = 'none';
+        scanInProgress = false;
+      }).catch((error) => {
+        clearInterval(progressInterval);
+        showToast('❌ Erro no scan: ' + error.message, 'error');
+        
+        // Reset UI
+        document.getElementById('scanButton').textContent = '🚀 Iniciar Scan da Rede';
+        document.getElementById('scanButton').disabled = false;
+        document.getElementById('progressContainer').style.display = 'none';
+        scanInProgress = false;
+      });
+    }
+    
+    function displayDevices(devices) {
+      const deviceList = document.getElementById('deviceList');
+      
+      if (devices.length === 0) {
+        deviceList.innerHTML = '<div class="empty-state">Nenhum dispositivo encontrado</div>';
+        return;
+      }
+      
+      const html = devices.map(device => `
+        <div class="device-item">
+          <div class="device-icon">${getDeviceIcon(device.type)}</div>
+          <div class="device-info">
+            <div class="device-type">${device.type || 'Desconhecido'}</div>
+            <div class="device-ip" ondblclick="copyToClipboard('${device.ip}')">${device.ip}</div>
+            <div class="device-mac" ondblclick="copyToClipboard('${device.mac}')">${device.mac}</div>
+            <div class="device-manufacturer">${device.manufacturer || 'Desconhecido'}</div>
+            <div class="device-category">${device.category || 'Outros'}</div>
+          </div>
+        </div>
+      `).join('');
+      
+      deviceList.innerHTML = html;
+    }
+    
+    function getDeviceIcon(type) {
+      const icons = {
+        'smartphone': '📱',
+        'computer': '💻',
+        'router': '📡',
+        'camera': '📹',
+        'tv': '📺',
+        'printer': '🖨️',
+        'game': '🎮',
+        'tablet': '📱',
+        'unknown': '❓'
+      };
+      return icons[type] || icons.unknown;
+    }
+    
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('📋 Copiado: ' + text, 'success');
+      });
+    }
+    
+    function showToast(message, type = 'info') {
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.innerHTML = `
+        <span class="toast-icon">${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+        <span>${message}</span>
+      `;
+      
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.classList.add('show');
+      }, 100);
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+          document.body.removeChild(toast);
+        }, 300);
+      }, 3000);
+    }
+    
+    function exportResults() {
+      if (devices.length === 0) {
+        showToast('❌ Nenhum dispositivo para exportar', 'error');
+        return;
+      }
+      
+      const result = window.api.exportResults(devices);
+      if (result.success) {
+        showToast('📊 ' + result.message, 'success');
+      } else {
+        showToast('❌ ' + result.message, 'error');
+      }
+    }
+  </script>
+</body>
+</html>

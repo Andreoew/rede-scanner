@@ -1,0 +1,96 @@
+{
+  "name": "rede-scanner",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "npm run generate-icons && electron-builder",
+    "build:win": "npm run generate-icons && electron-builder --win",
+    "build:mac": "npm run generate-icons && electron-builder --mac",
+    "build:linux": "npm run generate-icons && electron-builder --linux",
+    "generate-icons": "electron-icon-builder --input=src/icon.png --output=src --flatten",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "publish": "electron-builder --publish=always",
+    "publish:win": "npm run generate-icons && electron-builder --win --publish=always",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "keywords": [
+    "network",
+    "scanner",
+    "electron",
+    "security"
+  ],
+  "author": "André",
+  "license": "ISC",
+  "description": "Scanner de rede para descobrir dispositivos conectados na rede local",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.13.3",
+    "electron-icon-builder": "^2.0.1"
+  },
+  "dependencies": {
+    "dotenv": "^17.0.0",
+    "electron-updater": "^6.6.2",
+    "sonner": "^2.0.5"
+  },
+  "build": {
+    "appId": "com.rede-scanner.app",
+    "productName": "Rede Scanner",
+    "directories": {
+      "output": "dist",
+      "buildResources": "src"
+    },
+    "files": [
+      "src/**/*",
+      "package.json",
+      "node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "src/device-types.json",
+        "to": "device-types.json"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "src/icons/icon.ico"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "src/icons/icon.icns"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "src/icons/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
