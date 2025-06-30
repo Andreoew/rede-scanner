@@ -37,19 +37,19 @@
     .header-content {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 15px;
+      justify-content: flex-start;
+      gap: 30px;
+      position: relative;
     }
     
     .header-logo {
-      width: 50px;
-      height: 50px;
+      width: 150px;
+      height: 150px;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       object-fit: contain;
-      background: white;
       padding: 5px;
       transition: transform 0.3s ease;
+      flex-shrink: 0;
     }
     
     .header-logo:hover {
@@ -57,9 +57,12 @@
     }
     
     .header-text {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      width: auto;
     }
     
     .header h1 {
@@ -383,6 +386,13 @@
     .footer-contact {
       font-size: 0.8rem;
       opacity: 0.9;
+      text-decoration: none;
+      color: white;
+      transition: opacity 0.3s ease;
+    }
+    
+    .footer-contact:hover {
+      opacity: 1;
     }
     
     .footer-website {
@@ -395,7 +405,6 @@
     
     .footer-website:hover {
       opacity: 1;
-      text-decoration: underline;
     }
     
     @media (max-width: 600px) {
@@ -410,7 +419,7 @@
   <div class="container">
     <div class="header">
       <div class="header-content">
-        <img src="icon.png" alt="Logo" class="header-logo">
+        <img src="https://adss.com.br/logo.png" alt="Logo" class="header-logo">
         <div class="header-text">
           <h1>🔍 Scanner de Rede</h1>
           <p>Descubra dispositivos conectados na sua rede local</p>
@@ -468,8 +477,8 @@
     <div class="footer">
       <div class="footer-content">
         <div class="footer-company">Feito por ADSS</div>
-        <div class="footer-contact">📞 (65) 99252-2895</div>
-        <a href="https://www.adss.com.br" target="_blank" class="footer-website">🌐 www.adss.com.br</a>
+        <a href="#" onclick="openWhatsApp()" class="footer-contact">📞 (65) 99252-2895</a>
+        <a href="#" onclick="openExternalSite()" class="footer-website">🌐 www.adss.com.br</a>
       </div>
     </div>
   </div>
@@ -677,6 +686,26 @@
         showToast('📊 ' + result.message, 'success');
       } else {
         showToast('❌ ' + result.message, 'error');
+      }
+    }
+    
+    function openExternalSite() {
+      if (window.api && window.api.openExternal) {
+        window.api.openExternal('https://www.adss.com.br');
+      } else {
+        window.open('https://www.adss.com.br', '_blank');
+      }
+    }
+    
+    function openWhatsApp() {
+      const phoneNumber = '65992522895'; // Número sem formatação
+      const message = 'Olá! Gostaria de saber mais sobre o Scanner de Rede.';
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      
+      if (window.api && window.api.openExternal) {
+        window.api.openExternal(whatsappUrl);
+      } else {
+        window.open(whatsappUrl, '_blank');
       }
     }
   </script>

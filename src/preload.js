@@ -2,6 +2,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const { shell } = require('electron');
 
 // Carregar variáveis de ambiente do .env
 require('dotenv').config();
@@ -180,5 +181,8 @@ window.api = {
         message: `Erro ao exportar: ${error.message}` 
       };
     }
+  },
+  openExternal: (url) => {
+    shell.openExternal(url);
   }
 };
