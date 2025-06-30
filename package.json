@@ -1,7 +1,14 @@
 {
   "name": "rede-scanner",
-  "version": "1.0.0",
+  "productName": "Rede-Scanner",
+  "version": "1.0.5",
   "main": "src/main.js",
+  "description": "Scanner de rede para descobrir dispositivos conectados na rede local",
+  "author": {
+    "name": "André Silva",
+    "email": "contato@adss.com.br"
+  },
+  "homepage": "https://www.adss.com.br",
   "scripts": {
     "start": "electron .",
     "build": "npm run generate-icons && electron-builder",
@@ -20,77 +27,15 @@
     "scanner",
     "electron",
     "security"
-  ],
-  "author": "André Silva",
-  "license": "ISC",
-  "description": "Scanner de rede para descobrir dispositivos conectados na rede local",
-  "devDependencies": {
-    "electron": "^28.0.0",
-    "electron-builder": "^24.13.3",
-    "electron-icon-builder": "^2.0.1"
-  },
+  ],    
   "dependencies": {
     "dotenv": "^17.0.0",
     "electron-updater": "^6.6.2",
     "sonner": "^2.0.5"
   },
-  "build": {
-    "appId": "com.rede-scanner.app",
-    "productName": "Rede Scanner",
-    "directories": {
-      "output": "dist",
-      "buildResources": "src"
-    },
-    "files": [
-      "src/**/*",
-      "package.json",
-      "node_modules/**/*"
-    ],
-    "extraResources": [
-      {
-        "from": "src/device-types.json",
-        "to": "device-types.json"
-      }
-    ],
-    "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64"
-          ]
-        }
-      ],
-      "icon": "src/icons/icon.ico"
-    },
-    "mac": {
-      "target": [
-        {
-          "target": "dmg",
-          "arch": [
-            "x64",
-            "arm64"
-          ]
-        }
-      ],
-      "icon": "src/icons/icon.icns"
-    },
-    "linux": {
-      "target": [
-        {
-          "target": "AppImage",
-          "arch": [
-            "x64"
-          ]
-        }
-      ],
-      "icon": "src/icons/icon.png"
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true
-    }
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.13.3",
+    "electron-icon-builder": "^2.0.1"
   }
 }

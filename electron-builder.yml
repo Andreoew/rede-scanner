@@ -1,48 +1,46 @@
-appId: com.rede-scanner.app
+appId: com.adss.rede-scanner
 productName: Rede Scanner
 directories:
-  output: dist
-  buildResources: src
+  buildResources: build
 files:
-  - src/**/*
-  - package.json
-  - node_modules/**/*
-extraResources:
-  - from: src/device-types.json
-    to: device-types.json
-  - from: .env
-    to: .env
-    filter: ["**/*"]
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+  - '!package.json'
+  - '!node_modules/**/*'
+asarUnpack:
+  - '**/*.{node,dll}'
 win:
-  target:
-    - target: nsis
-      arch:
-        - x64
-  icon: src/icons/icon.ico
-  requestedExecutionLevel: asInvoker
+  executableName: rotion
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
 mac:
-  target:
-    - target: dmg
-      arch:
-        - x64
-        - arm64
-  icon: src/icons/icon.icns
-  category: public.app-category.utilities
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    - NSCameraUsageDescription: Application requests access to the device's camera.
+    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
+    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
+    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+dmg:
+  artifactName: ${name}-${version}.${ext}
 linux:
   target:
-    - target: AppImage
-      arch:
-        - x64
-  icon: src/icons/icon.png
+    - AppImage
+    - deb
+    - rpm
+    - pacman
+    - freebsd
+  maintainer: adss.com.br
+  synopsis: ${description}
   category: Utility
-nsis:
-  oneClick: false
-  allowToChangeInstallationDirectory: true
-  createDesktopShortcut: true
-  createStartMenuShortcut: true
-  shortcutName: Rede Scanner
-  uninstallDisplayName: Rede Scanner
-  artifactName: RedeScanner-Setup-${version}.${ext}
+appImage:
+  artifactName: ${name}-${version}.${ext}
+npmRebuild: false
 publish:
   provider: github
   releaseType: release
