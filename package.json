@@ -1,7 +1,7 @@
 {
   "name": "rede-scanner",
   "productName": "Rede-Scanner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "src/main.js",
   "description": "Scanner de rede para descobrir dispositivos conectados na rede local",
   "author": {
