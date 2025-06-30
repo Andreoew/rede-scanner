@@ -30,12 +30,14 @@ jobs:
         run: npm install
 
       - name: Run Lint
+        shell: bash
         run: |
           if [ -f package.json ] && grep -q '"lint"' package.json; then
             npm run lint || true
           fi
 
       - name: Run Tests
+        shell: bash
         run: |
           if [ -f package.json ] && grep -q '"test"' package.json; then
             npm test || true
