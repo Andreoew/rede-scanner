@@ -21,7 +21,7 @@
     "electron",
     "security"
   ],
-  "author": "André",
+  "author": "André Silva",
   "license": "ISC",
   "description": "Scanner de rede para descobrir dispositivos conectados na rede local",
   "devDependencies": {

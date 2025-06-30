@@ -52,7 +52,7 @@ jobs:
     - name: Build for Windows
       run: npm run build:win
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         
     - name: Upload Windows artifacts
       uses: actions/upload-artifact@v4
@@ -81,7 +81,7 @@ jobs:
     - name: Build for macOS
       run: npm run build:mac
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         
     - name: Upload macOS artifacts
       uses: actions/upload-artifact@v4
@@ -110,7 +110,7 @@ jobs:
     - name: Build for Linux
       run: npm run build:linux
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         
     - name: Upload Linux artifacts
       uses: actions/upload-artifact@v4
@@ -137,4 +137,4 @@ jobs:
         draft: false
         prerelease: false
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} 
