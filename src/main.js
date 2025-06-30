@@ -1,9 +1,10 @@
-const { app, BrowserWindow, Menu, dialog } = require('electron');
+const { app, BrowserWindow, Menu, dialog, Tray } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const fs = require('fs');
 
 let mainWindow;
+let tray = null; // Tray global
 
 // Configuração do Auto Updater
 autoUpdater.autoDownload = false;
@@ -29,6 +30,31 @@ function createWindow() {
     mainWindow.show();
     // Verificar atualizações após mostrar a janela
     checkForUpdates();
+  });
+
+  // Tray (bandeja do sistema)
+  if (!tray) {
+    const trayIconPath = path.join(__dirname, 'icons', '24x24.png');
+    const fallbackIconPath = path.join(__dirname, 'icons', 'icon.png');
+    const iconToUse = fs.existsSync(trayIconPath) ? trayIconPath : fallbackIconPath;
+    tray = new Tray(iconToUse);
+    const contextMenu = Menu.buildFromTemplate([
+      { label: 'Mostrar', click: () => { mainWindow.show(); } },
+      { label: 'Sair', click: () => { app.isQuiting = true; app.quit(); } }
+    ]);
+    tray.setToolTip('Rede Scanner');
+    tray.setContextMenu(contextMenu);
+    tray.on('click', () => {
+      mainWindow.show();
+    });
+  }
+
+  // Minimizar para tray ao fechar
+  mainWindow.on('close', (event) => {
+    if (!app.isQuiting) {
+      event.preventDefault();
+      mainWindow.hide();
+    }
   });
 
   // Criar menu personalizado

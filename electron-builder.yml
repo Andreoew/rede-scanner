@@ -21,6 +21,8 @@ nsis:
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
+  installerIcon: src/icons/icon.ico
+  uninstallerIcon: src/icons/icon.ico
 mac:
   target:
     - dmg
