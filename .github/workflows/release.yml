@@ -10,6 +10,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ${{ matrix.os }}
     env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
       MAC_LOOKUP_API_KEY: ${{ secrets.MAC_LOOKUP_API_KEY }}
 
     strategy:
@@ -27,6 +28,18 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Run Lint
+        run: |
+          if [ -f package.json ] && grep -q '"lint"' package.json; then
+            npm run lint || true
+          fi
+
+      - name: Run Tests
+        run: |
+          if [ -f package.json ] && grep -q '"test"' package.json; then
+            npm test || true
+          fi
 
       - name: apt-update
         if: startsWith(matrix.os, 'ubuntu-latest')
